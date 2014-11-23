@@ -172,22 +172,29 @@
 ;; | completion
 ;; `---------------------------------------------------------------------------
 (require 'auto-complete-config)
-                                        ;
-; Turn off fuzzy matching
+;;
+;; Turn off fuzzy matching
 (setq ac-use-fuzzy nil)
-; match case always
+;; match case always
 (setq ac-ignore-case nil)
-; Don't show menu                                        ;
+;; Don't show menu
 (setq ac-auto-show-menu nil)
-; Don't start unless explicitly called
+;; Don't start unless explicitly called
 (setq ac-auto-start 5)
 (global-set-key "\M-1" 'auto-complete)
-
-; Use a specific menu map when the menu is displayed
+;;
+;; Use a specific menu map when the menu is displayed
 (setq ac-use-menu-map t)
 ;; Default settings
 (define-key ac-menu-map "\M-n" 'ac-next)
 (define-key ac-menu-map "\M-p" 'ac-previous)
+(define-key ac-menu-map [down] 'ac-next)
+(define-key ac-menu-map [up] 'ac-previous)
+;;
+;; And remove [up] and [down] from the completing map all together
+(define-key ac-completing-map [down] nil)
+(define-key ac-completing-map [up] nil)
+
 
 (add-to-list 'ac-dictionary-directories "~/.xemacs/site-lisp/ac-dict")
 (ac-config-default)
@@ -196,12 +203,36 @@
 ;; |   cscope
 ;; `---------------------------------------------------------------------------
 
-;
-; Override the code to say we'll manage it all
-(setq cscope-option-use-inverted-index t)
+;;
+;; Override the code to say we'll manage it all
 (setq cscope-option-do-not-update-database t)
+(setq cscope-option-use-inverted-index t)
 (require 'xcscope)
+
 (cscope-setup)
+;;    required.  For example, the following will add "C-f#" keybindings, which
+;;    are easier to type than the usual "C-c s" prefixed keybindings.  Note
+;;    that specifying "global-map" instead of "cscope-minor-mode-keymap" makes the
+
+(define-key cscope-minor-mode-keymap [f5] 'cscope-set-initial-directory)
+(define-key cscope-minor-mode-keymap [(ctrl f5)] 'cscope-unset-initial-directory)
+(define-key cscope-minor-mode-keymap [f6] 'cscope-find-global-definition-no-prompting)
+(define-key cscope-minor-mode-keymap [(ctrl f6)] 'cscope-find-global-definition)
+(define-key cscope-minor-mode-keymap [f7] 'cscope-next-symbol)
+(define-key cscope-minor-mode-keymap [(ctrl f7)] 'cscope-next-file)
+(define-key cscope-minor-mode-keymap [f8] 'cscope-prev-symbol)
+(define-key cscope-minor-mode-keymap [(ctrl f8)] 'cscope-prev-file)
+
+(define-key cscope-minor-mode-keymap [f9] 'cscope-pop-mark)
+(define-key cscope-minor-mode-keymap [(ctrl f9)] 'cscope-find-this-symbol)
+(define-key cscope-minor-mode-keymap [f10] 'cscope-display-buffer)
+(define-key cscope-minor-mode-keymap [(ctrl f10)] 'cscope-display-buffer-toggle)
+;;
+;; These apear to be C-F1.. C-F4
+(define-key global-map "\e[1;5p" 'key-f12)
+(define-key global-map "\e[1;5q" 'key-f12)
+(define-key global-map "\e[1;5r" 'key-f12)
+(define-key global-map "\e[1;5s" 'key-f12)
 
 
 ;; .---------------------------------------------------------------------------
@@ -213,7 +244,6 @@
       (doxymacs-font-lock)))
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
-
 
 ;; .---------------------------------------------------------------------------
 ;; |   help+
@@ -286,6 +316,16 @@
 
 
 ;; .---------------------------------------------------------------------------
+;; |   Funky keyboard stuff
+;; `---------------------------------------------------------------------------
+;; (if (fboundp 'pc-selection-mode)
+;;     (pc-selection-mode)
+;;   (require 'pc-select))
+(cua-mode t)
+
+(windmove-default-keybindings 'meta)
+(setq windmove-wrap-around t)
+;; .---------------------------------------------------------------------------
 ;; |   key bindings
 ;; `---------------------------------------------------------------------------
 (define-key global-map "\eOA" 'previous-line)
@@ -339,9 +379,13 @@
   (interactive)
   (recompile))
 
+(defun key-c-f3 ()
+  (interactive)
+  (compile))
+
 (defun key-f4 ()
   (interactive)
-  (other-frame 1))
+  (message "f4"))
 
 (defun key-f5 ()
   (interactive)
@@ -349,7 +393,7 @@
 
 (defun key-f6 ()
   (interactive)
-  (multi-eshell-next))
+  (message "f6"))
 
 (defun key-f7 ()
   (interactive)
@@ -401,6 +445,12 @@
 (define-key global-map "\e[234z" 'key-f11)
 (define-key global-map "\e[235z" 'key-f12)
 
+;;
+;; These apear to be C-F1.. C-F4
+(define-key global-map "\e[1;5p" 'key-f1)
+(define-key global-map "\e[1;5q" 'key-f2)
+(define-key global-map "\e[1;5r" 'key-c-f3) ; Recompile
+(define-key global-map "\e[1;5s" 'key-f4)
 
 ;; .---------------------------------------------------------------------------
 ;; |   Emacs server
