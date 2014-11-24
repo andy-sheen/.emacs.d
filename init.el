@@ -342,22 +342,14 @@
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
 ;; `---------------------------------------------------------------------------
-;; (if (fboundp 'pc-selection-mode)
-;;     (pc-selection-mode)
-;;   (require 'pc-select))
-(cua-mode t)
-(setq cua-keep-region-after-copy t)
-(setq cua-delete-selection nil)
-(setq delete-active-region nil)
 ;;
-;; Redefine C-z back to suspend and delete to del-char
-(define-key cua--cua-keys-keymap [(ctrl z)] 'suspend-emacs)
+;; Allow S-<arrow> to select text
+(if (fboundp 'pc-selection-mode)
+    (pc-selection-mode)
+  (require 'pc-select))
 
-(define-key cua--region-keymap [remap delete-backward-char] 'delete-backward-char)
-(define-key cua--region-keymap [remap backward-delete-char] 'backward-delete-char)
-(define-key cua--region-keymap [remap backward-delete-char-untabify] 'backward-delete-char-untabify)
-(define-key cua--region-keymap [remap delete-char] 'delete-char)
-
+;;
+;; Move between multiple windows easily
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
 
