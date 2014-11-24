@@ -211,33 +211,39 @@
 
 (cscope-setup)
 
-;;
-;;    The following will add "C-f#" keybindings, which are easier to
-;;    type than the usual "C-c s" prefixed keybindings.  Note that
-;;    specifying "global-map" instead of "cscope-minor-mode-keymap"
-;;    makes the keys apply everywhere
-;;
-;; Segment 2 - finding functions
-;;
-(define-key cscope-minor-mode-keymap [f5] 'cscope-find-global-definition-no-prompting)
-(define-key cscope-minor-mode-keymap [(ctrl f5)] 'cscope-find-global-definition)
-(define-key cscope-minor-mode-keymap [f6] 'cscope-find-this-symbol)
-(define-key cscope-minor-mode-keymap [(ctrl f6)] 'cscope-find-assignments-to-this-symbol)
-(define-key cscope-minor-mode-keymap [f7] 'cscope-find-functions-calling-this-function)
-(define-key cscope-minor-mode-keymap [(ctrl f7)] 'cscope-find-called-functions)
-(define-key cscope-minor-mode-keymap [f8] ' cscope-find-this-text-string)
-(define-key cscope-minor-mode-keymap [(ctrl f8)] 'cscope-find-files-including-file)
-;;
-;; Segment 3 - moving around functions
-;;
-(define-key cscope-minor-mode-keymap [f9] 'cscope-history-backward-line-current-result)
-(define-key cscope-minor-mode-keymap [(ctrl f9)] 'cscope-history-backward-file-current-result)
-(define-key cscope-minor-mode-keymap [f10] 'cscope-history-forward-line-current-result)
-(define-key cscope-minor-mode-keymap [(ctrl f10)] 'cscope-history-forward-file-current-result)
-(define-key cscope-minor-mode-keymap [f11] 'cscope-set-initial-directory)
-(define-key cscope-minor-mode-keymap [(ctrl f11)] 'cscope-unset-initial-directory)
-(define-key cscope-minor-mode-keymap [f12] 'cscope-pop-mark)
-(define-key cscope-minor-mode-keymap [(ctrl f12)] 'cscope-display-buffer-toggle)
+(defun setup-cscope-keys (map)
+  "Sets up the keys according to map"
+  ;;
+  ;;    The following will add "f#" and "C-f#" keybindings, which are
+  ;;    easier to type than the usual "C-c s" prefixed keybindings.
+  ;;
+  ;; Segment 2 - finding functions
+  ;;
+  (define-key map [f5] 'cscope-find-global-definition-no-prompting)
+  (define-key map [(ctrl f5)] 'cscope-find-global-definition)
+  (define-key map [f6] 'cscope-find-this-symbol)
+  (define-key map [(ctrl f6)] 'cscope-find-assignments-to-this-symbol)
+  (define-key map [f7] 'cscope-find-functions-calling-this-function)
+  (define-key map [(ctrl f7)] 'cscope-find-called-functions)
+  (define-key map [f8] ' cscope-find-this-text-string)
+  (define-key map [(ctrl f8)] 'cscope-find-files-including-file)
+  ;;
+  ;; Segment 3 - moving around functions
+  ;;
+  (define-key map [f9] 'cscope-history-backward-line-current-result)
+  (define-key map [(ctrl f9)] 'cscope-history-backward-file-current-result)
+  (define-key map [f10] 'cscope-history-forward-line-current-result)
+  (define-key map [(ctrl f10)] 'cscope-history-forward-file-current-result)
+  (define-key map [f11] 'cscope-set-initial-directory)
+  (define-key map [(ctrl f11)] 'cscope-unset-initial-directory)
+  (define-key map [f12] 'cscope-pop-mark)
+  (define-key map [(ctrl f12)] 'cscope-display-buffer)
+  )
+
+
+;; And add the above to both the minor mode and the cscope buffer
+(setup-cscope-keys cscope-minor-mode-keymap)
+(setup-cscope-keys cscope-list-entry-keymap)
 
 ;;
 ;; Left to assign:
