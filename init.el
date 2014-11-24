@@ -210,29 +210,47 @@
 (require 'xcscope)
 
 (cscope-setup)
-;;    required.  For example, the following will add "C-f#" keybindings, which
-;;    are easier to type than the usual "C-c s" prefixed keybindings.  Note
-;;    that specifying "global-map" instead of "cscope-minor-mode-keymap" makes the
 
-(define-key cscope-minor-mode-keymap [f5] 'cscope-set-initial-directory)
-(define-key cscope-minor-mode-keymap [(ctrl f5)] 'cscope-unset-initial-directory)
-(define-key cscope-minor-mode-keymap [f6] 'cscope-find-global-definition-no-prompting)
-(define-key cscope-minor-mode-keymap [(ctrl f6)] 'cscope-find-global-definition)
-(define-key cscope-minor-mode-keymap [f7] 'cscope-next-symbol)
-(define-key cscope-minor-mode-keymap [(ctrl f7)] 'cscope-next-file)
-(define-key cscope-minor-mode-keymap [f8] 'cscope-prev-symbol)
-(define-key cscope-minor-mode-keymap [(ctrl f8)] 'cscope-prev-file)
-
-(define-key cscope-minor-mode-keymap [f9] 'cscope-pop-mark)
-(define-key cscope-minor-mode-keymap [(ctrl f9)] 'cscope-find-this-symbol)
-(define-key cscope-minor-mode-keymap [f10] 'cscope-display-buffer)
-(define-key cscope-minor-mode-keymap [(ctrl f10)] 'cscope-display-buffer-toggle)
 ;;
-;; These apear to be C-F1.. C-F4
-(define-key global-map "\e[1;5p" 'key-f12)
-(define-key global-map "\e[1;5q" 'key-f12)
-(define-key global-map "\e[1;5r" 'key-f12)
-(define-key global-map "\e[1;5s" 'key-f12)
+;;    The following will add "C-f#" keybindings, which are easier to
+;;    type than the usual "C-c s" prefixed keybindings.  Note that
+;;    specifying "global-map" instead of "cscope-minor-mode-keymap"
+;;    makes the keys apply everywhere
+;;
+;; Segment 2 - finding functions
+;;
+(define-key cscope-minor-mode-keymap [f5] 'cscope-find-global-definition-no-prompting)
+(define-key cscope-minor-mode-keymap [(ctrl f5)] 'cscope-find-global-definition)
+(define-key cscope-minor-mode-keymap [f6] 'cscope-find-this-symbol)
+(define-key cscope-minor-mode-keymap [(ctrl f6)] 'cscope-find-assignments-to-this-symbol)
+(define-key cscope-minor-mode-keymap [f7] 'cscope-find-functions-calling-this-function)
+(define-key cscope-minor-mode-keymap [(ctrl f7)] 'cscope-find-called-functions)
+(define-key cscope-minor-mode-keymap [f8] ' cscope-find-this-text-string)
+(define-key cscope-minor-mode-keymap [(ctrl f8)] 'cscope-find-files-including-file)
+;;
+;; Segment 3 - moving around functions
+;;
+(define-key cscope-minor-mode-keymap [f9] 'cscope-history-backward-line-current-result)
+(define-key cscope-minor-mode-keymap [(ctrl f9)] 'cscope-history-backward-file-current-result)
+(define-key cscope-minor-mode-keymap [f10] 'cscope-history-forward-line-current-result)
+(define-key cscope-minor-mode-keymap [(ctrl f10)] 'cscope-history-forward-file-current-result)
+(define-key cscope-minor-mode-keymap [f11] 'cscope-set-initial-directory)
+(define-key cscope-minor-mode-keymap [(ctrl f11)] 'cscope-unset-initial-directory)
+(define-key cscope-minor-mode-keymap [f12] 'cscope-pop-mark)
+(define-key cscope-minor-mode-keymap [(ctrl f12)] 'cscope-display-buffer-toggle)
+
+;;
+;; Left to assign:
+;;   C-c s D         cscope-dired-directory
+;;   C-c s E         cscope-edit-list-of-files-to-index
+;;   C-c s I         cscope-index-files
+;;   C-c s L         cscope-create-list-of-files-to-index
+;;   C-c s S .. C-c s T              cscope-tell-user-about-directory
+;;   C-c s W         cscope-tell-user-about-directory
+;;   C-c s a         cscope-set-initial-directory
+;;   C-c s b         cscope-display-buffer
+;;   C-c s e         cscope-find-egrep-pattern
+;;   C-c s f         cscope-find-this-file
 
 
 ;; .---------------------------------------------------------------------------
