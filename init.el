@@ -347,12 +347,20 @@
 ;;   (require 'pc-select))
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
-
+(setq cua-delete-selection nil)
+(setq delete-active-region nil)
 ;;
-;; Redefine C-z back to (define-key cua--cua-keys-keymap [(ctrl z)] 'suspend-emacs)
+;; Redefine C-z back to suspend and delete to del-char
+(define-key cua--cua-keys-keymap [(ctrl z)] 'suspend-emacs)
+
+(define-key cua--region-keymap [remap delete-backward-char] 'delete-backward-char)
+(define-key cua--region-keymap [remap backward-delete-char] 'backward-delete-char)
+(define-key cua--region-keymap [remap backward-delete-char-untabify] 'backward-delete-char-untabify)
+(define-key cua--region-keymap [remap delete-char] 'delete-char)
 
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
+
 ;; .---------------------------------------------------------------------------
 ;; |   key bindings
 ;; `---------------------------------------------------------------------------
