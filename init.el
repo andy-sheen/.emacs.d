@@ -340,6 +340,10 @@
 ;;     (pc-selection-mode)
 ;;   (require 'pc-select))
 (cua-mode t)
+(setq cua-keep-region-after-copy t)
+
+;;
+;; Redefine C-z back to (define-key cua--cua-keys-keymap [(ctrl z)] 'suspend-emacs)
 
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
