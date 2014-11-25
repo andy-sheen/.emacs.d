@@ -75,8 +75,8 @@
       ;; default) and that C:\cygwin\bin is not already in your
       ;; Windows Path (it generally should not be).
       ;;
-      (setq exec-path (cons "C:/cygwin64/bin" exec-path))
-      (setenv "PATH" (concat "C:\\cygwin64\\bin;" (getenv "PATH")))
+      (setq exec-path (cons "C:/cygwin/bin" (cons "C:/cygwin64/bin" exec-path)))
+      (setenv "PATH" (concat "C:\\cygwin64\\bin;" "C:\\cygwin\\bin;" (getenv "PATH")))
       (setenv "TEMP" "/cygdrive/c/Temp/")
       ;;
       ;; NT-emacs assumes a Windows command shell, which you change
@@ -95,11 +95,10 @@
                 'comint-strip-ctrl-m)
       ;;
       ;; Set an appropriate temporary file
-      (setq temporary-file-directory "/cygdrive/c/Users/jsheen/AppData/Local/Temp/")
+      (setq temporary-file-directory "/cygdrive/c/Temp/")
 
       ;;
       ;; Add in support for cygwin paths
-      (setq cygwin-mount-cygwin-bin-directory "c:\\cygwin64\\bin")
       (require 'cygwin-mount)
       (cygwin-mount-activate)
       )
@@ -196,7 +195,7 @@
 (define-key ac-completing-map [up] nil)
 
 
-(add-to-list 'ac-dictionary-directories "~/.xemacs/site-lisp/ac-dict")
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
 (ac-config-default)
 
 ;; .---------------------------------------------------------------------------
@@ -240,7 +239,6 @@
   (define-key map [(ctrl f12)] 'cscope-display-buffer)
   )
 
-
 ;; And add the above to both the minor mode and the cscope buffer
 (setup-cscope-keys cscope-minor-mode-keymap)
 (setup-cscope-keys cscope-list-entry-keymap)
@@ -281,7 +279,7 @@
 ;; |   paren mode
 ;; `---------------------------------------------------------------------------
 (show-paren-mode 1)
-(setq show-paren-delay 0)
+(setq show-paren-delay 0.5)
 
 (defadvice show-paren-function
     (after show-matching-paren-offscreen activate)
@@ -342,12 +340,6 @@
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
 ;; `---------------------------------------------------------------------------
-;;
-;; Allow S-<arrow> to select text
-(if (fboundp 'pc-selection-mode)
-    (pc-selection-mode)
-  (require 'pc-select))
-
 ;;
 ;; Move between multiple windows easily
 (windmove-default-keybindings 'meta)
