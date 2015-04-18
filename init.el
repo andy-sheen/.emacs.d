@@ -23,6 +23,13 @@
 	;;                  (background-color . "black")
 	))
 
+;;
+;; Add MELPA repository
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
 ;
 ; Set up printers to point to the correct printer
 ;(setq printer-name "//buster/ColourLaser")
@@ -266,6 +273,14 @@
       (doxymacs-font-lock)))
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
+
+
+;; .---------------------------------------------------------------------------
+;; |   electric pair mode
+;; `---------------------------------------------------------------------------
+;; turn on automatic bracket insertion by pairs. New in emacs 24
+(setq electric-pair-open-newline-between-pairs t)
+(electric-pair-mode 1)
 
 ;; .---------------------------------------------------------------------------
 ;; |   help+
