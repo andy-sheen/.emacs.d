@@ -9,6 +9,7 @@
     ("930a202ae41cb4417a89bc3a6f969ebb7fcea5ffa9df6e7313df4f7a2a631434" default)))
  '(display-time-mode t)
  '(gutter-buffers-tab-visible-p nil)
+ '(hexl-bits 8)
  '(indent-tabs-mode nil)
  '(show-paren-mode t)
  '(size-indication-mode t)
