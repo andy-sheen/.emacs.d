@@ -55,6 +55,7 @@
 		("\\.ahk$" . xahk-mode)
 		) auto-mode-alist ))
 
+(add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
 ;;
 ;; HTML mode
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
