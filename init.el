@@ -193,8 +193,8 @@
 ;; Use a specific menu map when the menu is displayed
 (setq ac-use-menu-map t)
 ;; Default settings
-(define-key ac-menu-map "\M-n" 'ac-next)
-(define-key ac-menu-map "\M-p" 'ac-previous)
+(define-key ac-menu-map "\C-n" 'ac-next)
+(define-key ac-menu-map "\C-p" 'ac-previous)
 (define-key ac-menu-map [down] 'ac-next)
 (define-key ac-menu-map [up] 'ac-previous)
 ;;
@@ -287,7 +287,11 @@
 ;; |   function args
 ;; `---------------------------------------------------------------------------
 (require 'function-args)
+(setq moo-select-method 'helm)
 (fa-config-default)
+;;
+;; Put back M-i for helm-swoop
+(define-key function-args-mode-map (kbd "M-i") 'helm-swoop)
 
 ;; .---------------------------------------------------------------------------
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
@@ -308,6 +312,8 @@
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -335,10 +341,10 @@
 ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
 
 ;; Move up and down like isearch
-(define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-(define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-(define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-(define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+(define-key helm-swoop-map (kbd "C-p") 'helm-previous-line)
+(define-key helm-swoop-map (kbd "C-n") 'helm-next-line)
+(define-key helm-multi-swoop-map (kbd "C-p") 'helm-previous-line)
+(define-key helm-multi-swoop-map (kbd "C-n") 'helm-next-line)
 
 ;; Save buffer when helm-multi-swoop-edit complete
 (setq helm-multi-swoop-edit-save t)
@@ -361,7 +367,18 @@
 ;; disable pre-input
 (setq helm-swoop-pre-input-function
       (lambda () ""))
+;;
+;; swiper-helm
+(require 'swiper-helm)
+(define-key global-map (kbd "C-f") 'swiper-helm)
+(define-key swiper-helm-keymap (kbd "C-f") 'helm-next-line)
+;;
+;; AC plus helm
+(global-set-key (kbd "M-2") 'ac-complete-with-helm)
+(define-key ac-complete-mode-map (kbd "M-2") 'ac-complete-with-helm)
 
+;;
+;; helm-gtags
 (setq
  helm-gtags-ignore-case t
  helm-gtags-auto-update t
@@ -480,7 +497,7 @@
 (define-key global-map "\C-xs" 'save-buffer)
 (define-key global-map "\M-l" 'goto-line)
 
-(define-key global-map "\C-f" 'isearch-forward)
+;;(define-key global-map "\C-f" 'isearch-forward)
 (define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
 
 (define-key global-map "\M-#" 'menu-bar-open)
