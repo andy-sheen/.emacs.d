@@ -178,34 +178,42 @@
 ;; .---------------------------------------------------------------------------
 ;; | completion
 ;; `---------------------------------------------------------------------------
-(require 'auto-complete-config)
-;;
-;; Turn off fuzzy matching
-(setq ac-use-fuzzy nil)
-;; match case always
-(setq ac-ignore-case nil)
-;; Don't show menu
-(setq ac-auto-show-menu nil)
-;; Don't start unless explicitly called
-(setq ac-auto-start 5)
-(global-set-key "\M-1" 'auto-complete)
-;;
-;; Use a specific menu map when the menu is displayed
-(setq ac-use-menu-map t)
-;; Default settings
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
-(define-key ac-menu-map [down] 'ac-next)
-(define-key ac-menu-map [up] 'ac-previous)
-;;
-;; And remove [up] and [down] from the completing map all together
-(define-key ac-completing-map [down] nil)
-(define-key ac-completing-map [up] nil)
+;; (require 'auto-complete-config)
+;; ;;
+;; ;; Turn off fuzzy matching
+;; (setq ac-use-fuzzy nil)
+;; ;; match case always
+;; (setq ac-ignore-case nil)
+;; ;; Don't show menu
+;; (setq ac-auto-show-menu nil)
+;; ;; Don't start unless explicitly called
+;; (setq ac-auto-start 5)
+;; (global-set-key "\M-1" 'auto-complete)
+;; ;;
+;; ;; Use a specific menu map when the menu is displayed
+;; (setq ac-use-menu-map t)
+;; ;; Default settings
+;; (define-key ac-menu-map "\C-n" 'ac-next)
+;; (define-key ac-menu-map "\C-p" 'ac-previous)
+;; (define-key ac-menu-map [down] 'ac-next)
+;; (define-key ac-menu-map [up] 'ac-previous)
+;; ;;
+;; ;; And remove [up] and [down] from the completing map all together
+;; (define-key ac-completing-map [down] nil)
+;; (define-key ac-completing-map [up] nil)
 
 
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-(ac-config-default)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+;; (ac-config-default)
 
+;; .---------------------------------------------------------------------------
+;; | company
+;; `---------------------------------------------------------------------------
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-idle-delay 0.1)
+;;(setq company-backends (delete 'company-semantic company-backends))
+(define-key c-mode-map  [(tab)] 'company-complete)
+(define-key c++-mode-map  [(tab)] 'company-complete)
 ;; .---------------------------------------------------------------------------
 ;; |   cscope
 ;; `---------------------------------------------------------------------------
@@ -330,10 +338,11 @@
 
 ;; helm-swoop config: https://github.com/ShingoFukuyama/helm-swoop
 ;; Change the keybinds to whatever you like :)
-(global-set-key (kbd "M-i") 'helm-swoop)
+;;(global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "C-f") 'helm-swoop)
 (global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
 (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-(global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+(global-set-key (kbd "M-i") 'helm-multi-swoop-all)
 
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
@@ -345,8 +354,10 @@
 ;; Move up and down like isearch
 (define-key helm-swoop-map (kbd "C-p") 'helm-previous-line)
 (define-key helm-swoop-map (kbd "C-n") 'helm-next-line)
+(define-key helm-swoop-map (kbd "C-f") 'helm-next-line)
 (define-key helm-multi-swoop-map (kbd "C-p") 'helm-previous-line)
 (define-key helm-multi-swoop-map (kbd "C-n") 'helm-next-line)
+(define-key helm-multi-swoop-map (kbd "C-f") 'helm-next-line)
 
 ;; Save buffer when helm-multi-swoop-edit complete
 (setq helm-multi-swoop-edit-save t)
@@ -371,17 +382,18 @@
       (lambda () ""))
 ;;
 ;; swiper-helm
-(require 'swiper-helm)
-(define-key global-map (kbd "C-f") 'swiper-helm)
-(define-key swiper-helm-keymap (kbd "C-f") 'helm-next-line)
+;;(require 'swiper-helm)
+;;(define-key global-map (kbd "C-f") 'swiper-helm)
+;;(define-key swiper-helm-keymap (kbd "C-f") 'helm-next-line)
 ;;
 ;; AC plus helm
-(global-set-key (kbd "M-2") 'ac-complete-with-helm)
-(define-key ac-complete-mode-map (kbd "M-2") 'ac-complete-with-helm)
+;;(global-set-key (kbd "M-2") 'ac-complete-with-helm)
+;;(define-key ac-complete-mode-map (kbd "M-2") 'ac-complete-with-helm)
 
 ;;
 ;; helm-gtags
 (setq
+ helm-gtags-path-style 'relative
  helm-gtags-ignore-case t
  helm-gtags-auto-update t
  helm-gtags-use-input-at-cursor t
