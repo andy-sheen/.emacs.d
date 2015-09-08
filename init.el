@@ -214,63 +214,63 @@
 ;;(setq company-backends (delete 'company-semantic company-backends))
 (define-key c-mode-map  [(tab)] 'company-complete)
 (define-key c++-mode-map  [(tab)] 'company-complete)
-;; .---------------------------------------------------------------------------
-;; |   cscope
-;; `---------------------------------------------------------------------------
+;; ;; .---------------------------------------------------------------------------
+;; ;; |   cscope
+;; ;; `---------------------------------------------------------------------------
 
-;;
-;; Override the code to say we'll manage it all
-(setq cscope-option-do-not-update-database t)
-(setq cscope-option-use-inverted-index t)
-(require 'xcscope)
+;; ;;
+;; ;; Override the code to say we'll manage it all
+;; (setq cscope-option-do-not-update-database t)
+;; (setq cscope-option-use-inverted-index t)
+;; (require 'xcscope)
 
-(cscope-setup)
+;; (cscope-setup)
 
-(defun setup-cscope-keys (map)
-  "Sets up the keys according to map"
-  ;;
-  ;;    The following will add "f#" and "C-f#" keybindings, which are
-  ;;    easier to type than the usual "C-c s" prefixed keybindings.
-  ;;
-  ;; Segment 2 - finding functions
-  ;;
-  (define-key map [f5] 'cscope-find-global-definition-no-prompting)
-  (define-key map [(ctrl f5)] 'cscope-find-global-definition)
-  (define-key map [f6] 'cscope-find-this-symbol)
-  (define-key map [(ctrl f6)] 'cscope-find-assignments-to-this-symbol)
-  (define-key map [f7] 'cscope-find-functions-calling-this-function)
-  (define-key map [(ctrl f7)] 'cscope-find-called-functions)
-  (define-key map [f8] ' cscope-find-this-text-string)
-  (define-key map [(ctrl f8)] 'cscope-find-files-including-file)
-  ;;
-  ;; Segment 3 - moving around functions
-  ;;
-  (define-key map [f9] 'cscope-history-backward-line-current-result)
-  (define-key map [(ctrl f9)] 'cscope-history-backward-file-current-result)
-  (define-key map [f10] 'cscope-history-forward-line-current-result)
-  (define-key map [(ctrl f10)] 'cscope-history-forward-file-current-result)
-  (define-key map [f11] 'cscope-set-initial-directory)
-  (define-key map [(ctrl f11)] 'cscope-unset-initial-directory)
-  (define-key map [f12] 'cscope-pop-mark)
-  (define-key map [(ctrl f12)] 'cscope-display-buffer)
-  )
+;; (defun setup-cscope-keys (map)
+;;   "Sets up the keys according to map"
+;;   ;;
+;;   ;;    The following will add "f#" and "C-f#" keybindings, which are
+;;   ;;    easier to type than the usual "C-c s" prefixed keybindings.
+;;   ;;
+;;   ;; Segment 2 - finding functions
+;;   ;;
+;;   (define-key map [f5] 'cscope-find-global-definition-no-prompting)
+;;   (define-key map [(ctrl f5)] 'cscope-find-global-definition)
+;;   (define-key map [f6] 'cscope-find-this-symbol)
+;;   (define-key map [(ctrl f6)] 'cscope-find-assignments-to-this-symbol)
+;;   (define-key map [f7] 'cscope-find-functions-calling-this-function)
+;;   (define-key map [(ctrl f7)] 'cscope-find-called-functions)
+;;   (define-key map [f8] ' cscope-find-this-text-string)
+;;   (define-key map [(ctrl f8)] 'cscope-find-files-including-file)
+;;   ;;
+;;   ;; Segment 3 - moving around functions
+;;   ;;
+;;   (define-key map [f9] 'cscope-history-backward-line-current-result)
+;;   (define-key map [(ctrl f9)] 'cscope-history-backward-file-current-result)
+;;   (define-key map [f10] 'cscope-history-forward-line-current-result)
+;;   (define-key map [(ctrl f10)] 'cscope-history-forward-file-current-result)
+;;   (define-key map [f11] 'cscope-set-initial-directory)
+;;   (define-key map [(ctrl f11)] 'cscope-unset-initial-directory)
+;;   (define-key map [f12] 'cscope-pop-mark)
+;;   (define-key map [(ctrl f12)] 'cscope-display-buffer)
+;;   )
 
-;; And add the above to both the minor mode and the cscope buffer
-(setup-cscope-keys cscope-minor-mode-keymap)
-(setup-cscope-keys cscope-list-entry-keymap)
+;; ;; And add the above to both the minor mode and the cscope buffer
+;; (setup-cscope-keys cscope-minor-mode-keymap)
+;; (setup-cscope-keys cscope-list-entry-keymap)
 
-;;
-;; Left to assign:
-;;   C-c s D         cscope-dired-directory
-;;   C-c s E         cscope-edit-list-of-files-to-index
-;;   C-c s I         cscope-index-files
-;;   C-c s L         cscope-create-list-of-files-to-index
-;;   C-c s S .. C-c s T              cscope-tell-user-about-directory
-;;   C-c s W         cscope-tell-user-about-directory
-;;   C-c s a         cscope-set-initial-directory
-;;   C-c s b         cscope-display-buffer
-;;   C-c s e         cscope-find-egrep-pattern
-;;   C-c s f         cscope-find-this-file
+;; ;;
+;; ;; Left to assign:
+;; ;;   C-c s D         cscope-dired-directory
+;; ;;   C-c s E         cscope-edit-list-of-files-to-index
+;; ;;   C-c s I         cscope-index-files
+;; ;;   C-c s L         cscope-create-list-of-files-to-index
+;; ;;   C-c s S .. C-c s T              cscope-tell-user-about-directory
+;; ;;   C-c s W         cscope-tell-user-about-directory
+;; ;;   C-c s a         cscope-set-initial-directory
+;; ;;   C-c s b         cscope-display-buffer
+;; ;;   C-c s e         cscope-find-egrep-pattern
+;; ;;   C-c s f         cscope-find-this-file
 
 
 ;; .---------------------------------------------------------------------------
@@ -294,12 +294,12 @@
 ;; .---------------------------------------------------------------------------
 ;; |   function args
 ;; `---------------------------------------------------------------------------
-(require 'function-args)
-(setq moo-select-method 'helm)
-(fa-config-default)
+;(require 'function-args)
+;(setq moo-select-method 'helm)
+;(fa-config-default)
 ;;
 ;; Put back M-i for helm-swoop
-(define-key function-args-mode-map (kbd "M-i") 'helm-swoop)
+;(define-key function-args-mode-map (kbd "M-i") 'helm-swoop)
 
 ;; .---------------------------------------------------------------------------
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
@@ -470,6 +470,14 @@
 ;;     '(lambda () (define-abbrev php-mode-abbrev-table "ex" "extends")))
 
 ;; .---------------------------------------------------------------------------
+;; |   projectile
+;; `---------------------------------------------------------------------------
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(setq projectile-switch-project-action 'helm-projectile-find-file-dwim)
+(helm-projectile-on)
+
+;; .---------------------------------------------------------------------------
 ;; |   sr-speedbar
 ;; `---------------------------------------------------------------------------
 (setq sr-speedbar-skip-other-window-p t)
@@ -564,7 +572,7 @@
 
 (defun key-f5 ()
   (interactive)
-  (message "f5"))
+  (helm-resume))
 
 (defun key-f6 ()
   (interactive)
@@ -598,7 +606,7 @@
 (define-key global-map [f2] 'key-f2)
 (define-key global-map [f3] 'key-f3)
 (define-key global-map [f4] 'key-f4)
-(define-key global-map [f5] 'key-f5)
+(define-key global-map [f5] 'helm-resume)
 (define-key global-map [f6] 'key-f6)
 (define-key global-map [f7] 'key-f7)
 (define-key global-map [f8] 'key-f8)
