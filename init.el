@@ -214,6 +214,12 @@
 ;;(setq company-backends (delete 'company-semantic company-backends))
 (define-key c-mode-map  [(tab)] 'company-complete)
 (define-key c++-mode-map  [(tab)] 'company-complete)
+
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "M-'") 'helm-company)
+     (define-key company-active-map (kbd "M-'") 'helm-company)))
+
 ;; ;; .---------------------------------------------------------------------------
 ;; ;; |   cscope
 ;; ;; `---------------------------------------------------------------------------
@@ -288,8 +294,8 @@
 ;; |   electric pair mode
 ;; `---------------------------------------------------------------------------
 ;; turn on automatic bracket insertion by pairs. New in emacs 24
-(setq electric-pair-open-newline-between-pairs t)
-(electric-pair-mode 1)
+;(setq electric-pair-open-newline-between-pairs t)
+;(electric-pair-mode 1)
 
 ;; .---------------------------------------------------------------------------
 ;; |   function args
