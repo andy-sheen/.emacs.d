@@ -53,6 +53,7 @@
 		("\\.css$" . css-mode)
 		("^[Mm]akefile" . makefile-mode)
 		("\\.ahk$" . xahk-mode)
+		("\\.ad$" . adoc-mode)
 		) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
@@ -112,6 +113,12 @@
       )
   ;; Could put else in here
 )
+;; .---------------------------------------------------------------------------
+;; |   adoc-mode
+;; `---------------------------------------------------------------------------
+;
+(autoload 'adoc-mode "adoc-mode" nil t)
+
 ;; .---------------------------------------------------------------------------
 ;; |   Ahk-mode
 ;; `---------------------------------------------------------------------------
@@ -432,6 +439,16 @@
 (require 'help-mode+)
 
 ;; .---------------------------------------------------------------------------
+;; |   magit mode
+;; `---------------------------------------------------------------------------
+(require 'magit-gerrit)
+
+;; if remote url is not using the default gerrit port and
+;; ssh scheme, need to manually set this variable
+;(setq-default magit-gerrit-ssh-creds "myid@gerrithost.org")
+(setq-default magit-gerrit-remote "master")
+
+;; .---------------------------------------------------------------------------
 ;; |   paren mode
 ;; `---------------------------------------------------------------------------
 (show-paren-mode 1)
@@ -582,7 +599,7 @@
 
 (defun key-f6 ()
   (interactive)
-  (message "f6"))
+  (magit-status))
 
 (defun key-f7 ()
   (interactive)
