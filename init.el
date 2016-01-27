@@ -603,7 +603,7 @@
 
 (defun key-f7 ()
   (interactive)
-  (load-theme 'whiteboard t))
+  (load-theme 'wombat t))
 
 (defun key-f8 ()
   (interactive)
