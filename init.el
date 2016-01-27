@@ -336,7 +336,7 @@
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c <SPC>") 'helm-all-mark-rings)
-(global-set-key (kbd "M-r") 'helm-do-grep)
+;;(global-set-key (kbd "M-r") 'helm-do-grep)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -522,6 +522,12 @@
 
 (setq-default inhibit-startup-message t)
 
+
+;; .---------------------------------------------------------------------------
+;; |   tramp
+;; `---------------------------------------------------------------------------
+;;
+(setq tramp-default-method "ssh")
 
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
