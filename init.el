@@ -446,7 +446,8 @@
 ;; if remote url is not using the default gerrit port and
 ;; ssh scheme, need to manually set this variable
 ;(setq-default magit-gerrit-ssh-creds "myid@gerrithost.org")
-(setq-default magit-gerrit-remote "master")
+(setq-default magit-gerrit-remote "review")
+(setq-default git-commit-summary-max-length 70)
 
 ;; .---------------------------------------------------------------------------
 ;; |   paren mode
