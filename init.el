@@ -35,6 +35,14 @@
 ;(setq printer-name "//buster/ColourLaser")
 
 ;;
+;; Define a function to call every time a  frame is created
+(defun my-load-on-frame (frame)
+  (load-theme 'wombat t)
+  )
+
+(add-to-list 'after-make-frame-functions 'my-load-on-frame)
+
+;;
 ;; Turn on column numbering
 (setq column-number-mode t)
 
@@ -216,7 +224,9 @@
 ;; .---------------------------------------------------------------------------
 ;; | company
 ;; `---------------------------------------------------------------------------
-(add-hook 'after-init-hook 'global-company-mode)
+;;(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'c-mode-hook 'company-mode)
+(add-hook 'c++-mode-hook 'company-mode)
 (setq company-idle-delay 0.1)
 ;;(setq company-backends (delete 'company-semantic company-backends))
 (define-key c-mode-map  [(tab)] 'company-complete)
@@ -622,7 +632,7 @@
 
 (defun key-f10 ()
   (interactive)
-  (message "f10"))
+  (delete-frame))
 
 (defun key-f11 ()
   (interactive)
@@ -630,7 +640,10 @@
 
 (defun key-f12 ()
   (interactive)
-  (message "f12"))
+  (delete-frame))
+
+;; And set the colours....
+(key-f7)
 
 (define-key global-map [f1] 'key-f1)
 (define-key global-map [f2] 'key-f2)
