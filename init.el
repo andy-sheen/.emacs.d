@@ -80,7 +80,7 @@
 (if (eq system-type 'windows-nt)
     (progn
       ;; WARNING:The latest version of bash sets and uses the environment variable PID.
-      ;; For some as yet unknown reason, if PID is set and Emacs passes it on to bash subshells,
+      ;; For some as yet unknown reason, if PID is set and Emacs passes it on to bash subshells, 
       ;; bash croaks (Emacs can inherit the PID variable if it's started from a bash shell).
       ;; If you clear the PID variable in your startup file,
       ;; you should be able to continue to use bash as your subshell:
@@ -123,6 +123,28 @@
       )
   ;; Could put else in here
 )
+
+;;
+;; Setup Cygwin environment
+;;
+(if (eq system-type 'cygwin)
+    (progn
+      ;;
+      ;; This removes unsightly ^M characters that would otherwise
+      ;; appear in the output of java applications.
+      ;;
+      (add-hook 'comint-output-filter-functions
+                'comint-strip-ctrl-m)
+      ;;
+      ;; Set an appropriate temporary file
+      (setq temporary-file-directory "/cygdrive/c/Temp/")
+
+      (if (string= (upcase system-name) "BUSTER")
+          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
+      )
+  ;; Could put else in here
+)
+
 ;; .---------------------------------------------------------------------------
 ;; |   adoc-mode
 ;; `---------------------------------------------------------------------------
