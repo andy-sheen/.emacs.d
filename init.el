@@ -506,10 +506,10 @@
 ;; .---------------------------------------------------------------------------
 ;; |   projectile
 ;; `---------------------------------------------------------------------------
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(setq projectile-switch-project-action 'helm-projectile-find-file-dwim)
-(helm-projectile-on)
+;; (projectile-global-mode)
+;; (setq projectile-completion-system 'helm)
+;; (setq projectile-switch-project-action 'helm-projectile-find-file-dwim)
+;; (helm-projectile-on)
 
 ;; .---------------------------------------------------------------------------
 ;; |   sr-speedbar
