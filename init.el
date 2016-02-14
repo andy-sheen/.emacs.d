@@ -30,9 +30,6 @@
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   )
-;
-; Set up printers to point to the correct printer
-;(setq printer-name "//buster/ColourLaser")
 
 ;;
 ;; Define a function to call every time a  frame is created
@@ -65,6 +62,7 @@
 		) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
+(add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
 ;;
 ;; HTML mode
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
@@ -118,6 +116,10 @@
       ;; Add in support for cygwin paths
       (require 'cygwin-mount)
       (cygwin-mount-activate)
+      ;;
+      ;;   Set up printers to point to the correct printer
+      (if (string= (upcase system-name) "BUSTER")
+          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
       )
   ;; Could put else in here
 )
