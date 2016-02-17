@@ -32,6 +32,19 @@
   )
 
 ;;
+;; Locale and Encoding
+;;
+(set-locale-environment "en_GB.UTF-8")
+(set-language-environment 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+;;
 ;; Define a function to call every time a  frame is created
 (defun my-load-on-frame (frame)
   (load-theme 'wombat t)
@@ -80,7 +93,7 @@
 (if (eq system-type 'windows-nt)
     (progn
       ;; WARNING:The latest version of bash sets and uses the environment variable PID.
-      ;; For some as yet unknown reason, if PID is set and Emacs passes it on to bash subshells, 
+      ;; For some as yet unknown reason, if PID is set and Emacs passes it on to bash subshells,
       ;; bash croaks (Emacs can inherit the PID variable if it's started from a bash shell).
       ;; If you clear the PID variable in your startup file,
       ;; you should be able to continue to use bash as your subshell:
