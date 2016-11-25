@@ -15,13 +15,13 @@
 ;; Size of the initial frame
 (setq default-frame-alist
       '(
-	;;(top . 100) (left . 100)
-	(width . 140) (height . 60)
-	(cursor-color . "black")
-	(cursor-type . box)
-	(foreground-color . "black")
-	;;                  (background-color . "black")
-	))
+        ;;(top . 100) (left . 100)
+        (width . 140) (height . 60)
+        (cursor-color . "black")
+        (cursor-type . box)
+        (foreground-color . "black")
+        ;;                  (background-color . "black")
+        ))
 
 ;;
 ;; Add MELPA repository
@@ -63,16 +63,16 @@
 ;
 (setq auto-mode-alist
       (append '(("\\.txt$" . text-mode)
-		("\\.cc$\\|\\.C$" . c++-mode)
-		("\\.c$\\|\\.h$" . c-mode)
-		("\\.js$" . c-mode)
-		("\\.htm$" . html-helper-mode)
-		("\\.html$" . html-helper-mode)
-		("\\.css$" . css-mode)
-		("^[Mm]akefile" . makefile-mode)
-		("\\.ahk$" . xahk-mode)
-		("\\.ad$" . adoc-mode)
-		) auto-mode-alist ))
+                ("\\.cc$\\|\\.C$" . c++-mode)
+                ("\\.c$\\|\\.h$" . c-mode)
+                ("\\.js$" . c-mode)
+                ("\\.htm$" . html-helper-mode)
+                ("\\.html$" . html-helper-mode)
+                ("\\.css$" . css-mode)
+                ("^[Mm]akefile" . makefile-mode)
+                ("\\.ahk$" . xahk-mode)
+                ("\\.ad$" . adoc-mode)
+                ) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
 (add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
@@ -561,11 +561,11 @@
 ;;
 ;; Note: this function is bound to F2 (see below)
 (setq display-time-world-list '(
-				("America/Los_Angeles" "Irvine/SD")
-				("US/Eastern" "Andover")
-				("Europe/London" "London")
-				("Asia/Jerusalem" "Israel")
-				)
+                                ("America/Los_Angeles" "Irvine/SD")
+                                ("US/Eastern" "Andover")
+                                ("Europe/London" "London")
+                                ("Asia/Jerusalem" "Israel")
+                                )
 )
 
 (setq-default inhibit-startup-message t)
@@ -576,6 +576,13 @@
 ;; `---------------------------------------------------------------------------
 ;;
 (setq tramp-default-method "ssh")
+
+;; .---------------------------------------------------------------------------
+;; |   whitespace
+;; `---------------------------------------------------------------------------
+;;
+(add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'makefile-mode-hook 'indent-tabs-mode)
 
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
@@ -673,7 +680,7 @@
 
 (defun key-f11 ()
   (interactive)
-  (message "f11"))
+  (whitespace-mode))
 
 (defun key-f12 ()
   (interactive)
