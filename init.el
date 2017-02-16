@@ -352,6 +352,14 @@
 ;(electric-pair-mode 1)
 
 ;; .---------------------------------------------------------------------------
+;; |   flyspell
+;; `---------------------------------------------------------------------------
+(add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'adoc-mode-hook (lambda () (flyspell-mode 1)))
+(require 'flyspell-correct-helm)
+(define-key flyspell-mode-map (kbd "M-'") 'flyspell-correct-previous-word-generic)
+
+;; .---------------------------------------------------------------------------
 ;; |   function args
 ;; `---------------------------------------------------------------------------
 ;(require 'function-args)
