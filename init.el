@@ -26,10 +26,11 @@
 ;;
 ;; Add MELPA repository
 (when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  )
+   (require 'package)
+   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+   (package-initialize)
+   )
+(setq custom-safe-themes t)
 
 ;;
 ;; Locale and Encoding
@@ -44,6 +45,7 @@
 (setq-default buffer-file-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+(setq-default indent-tabs-mode nil)
 ;;
 ;; Define a function to call every time a  frame is created
 (defun my-load-on-frame (frame)
@@ -263,17 +265,17 @@
 ;; | company
 ;; `---------------------------------------------------------------------------
 ;;(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'c++-mode-hook 'company-mode)
-(setq company-idle-delay 0.1)
+;(add-hook 'c-mode-hook 'company-mode)
+;(add-hook 'c++-mode-hook 'company-mode)
+;(setq company-idle-delay 0.1)
 ;;(setq company-backends (delete 'company-semantic company-backends))
-(define-key c-mode-map  [(tab)] 'company-complete)
-(define-key c++-mode-map  [(tab)] 'company-complete)
+;(define-key c-mode-map  [(tab)] 'company-complete)
+;(define-key c++-mode-map  [(tab)] 'company-complete)
 
-(eval-after-load 'company
-  '(progn
-     (define-key company-mode-map (kbd "M-'") 'helm-company)
-     (define-key company-active-map (kbd "M-'") 'helm-company)))
+;(eval-after-load 'company
+;  '(progn
+;     (define-key company-mode-map (kbd "M-'") 'helm-company)
+;     (define-key company-active-map (kbd "M-'") 'helm-company)))
 
 ;; ;; .---------------------------------------------------------------------------
 ;; ;; |   cscope
@@ -489,21 +491,29 @@
 ;; .---------------------------------------------------------------------------
 ;; |   help+
 ;; `---------------------------------------------------------------------------
-(require 'help+)
-(require 'help-fns+)
-(require 'help-macro+)
-(require 'help-mode+)
+;(require 'help+)
+;(require 'help-fns+)
+;(require 'help-macro+)
+;(require 'help-mode+)
 
 ;; .---------------------------------------------------------------------------
 ;; |   magit mode
 ;; `---------------------------------------------------------------------------
-(require 'magit-gerrit)
+;(require 'magit-gerrit)
 
 ;; if remote url is not using the default gerrit port and
 ;; ssh scheme, need to manually set this variable
 ;(setq-default magit-gerrit-ssh-creds "myid@gerrithost.org")
-(setq-default magit-gerrit-remote "review")
+;(setq-default magit-gerrit-remote "review")
 (setq-default git-commit-summary-max-length 70)
+
+;; .---------------------------------------------------------------------------
+;; |   org mode
+;; `---------------------------------------------------------------------------
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-switchb)
 
 ;; .---------------------------------------------------------------------------
 ;; |   paren mode
@@ -527,8 +537,8 @@
 ;; `---------------------------------------------------------------------------
 (require 'package)
 
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+;;(add-to-list 'package-archives
+;;             '("melpa" . "http://melpa.org/packages/") t)
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -663,13 +673,13 @@
   (interactive)
   (sr-speedbar-toggle))
 
-(defun key-f5 ()
-  (interactive)
-  (helm-resume))
+;; (defun key-f5 ()
+;;   (interactive)
+;;   (helm-resume))
 
-(defun key-f6 ()
-  (interactive)
-  (magit-status))
+;; (defun key-f6 ()
+;;   (interactive)
+;;   (magit-status))
 
 (defun key-f7 ()
   (interactive)
@@ -696,14 +706,14 @@
   (delete-frame))
 
 ;; And set the colours....
-(key-f7)
+;(load-theme 'wombat t)
 
 (define-key global-map [f1] 'key-f1)
 (define-key global-map [f2] 'key-f2)
 (define-key global-map [f3] 'key-f3)
 (define-key global-map [f4] 'key-f4)
 (define-key global-map [f5] 'helm-resume)
-(define-key global-map [f6] 'key-f6)
+(define-key global-map [f6] 'magit-status)
 (define-key global-map [f7] 'key-f7)
 (define-key global-map [f8] 'key-f8)
 (define-key global-map [f9] 'key-f9)
