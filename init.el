@@ -7,6 +7,7 @@
 ; emacs specific display tweaks
 ;
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit-gerrit")
 
 ;(require 'custom)
 ;;;;
@@ -499,7 +500,13 @@
 ;; .---------------------------------------------------------------------------
 ;; |   magit mode
 ;; `---------------------------------------------------------------------------
-;(require 'magit-gerrit)
+;;
+;; Note I am using https://github.com/ispras/magit-gerrit in site-lisp/magit-gerrit
+;; ced to site lisp and:
+;;$ cd site-lisp/
+;;$ git clone https://github.com/ispras/magit-gerrit.git
+
+(require 'magit-gerrit)
 
 ;; if remote url is not using the default gerrit port and
 ;; ssh scheme, need to manually set this variable
