@@ -156,6 +156,7 @@
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
+      (setq magit-git-executable "/cygdrive/c/cygwin64/bin/git.exe")
 
       (if (string= (upcase system-name) "BUSTER")
           (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
