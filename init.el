@@ -16,13 +16,13 @@
 ;; Size of the initial frame
 (setq default-frame-alist
       '(
-        ;;(top . 100) (left . 100)
-        (width . 140) (height . 60)
-        (cursor-color . "black")
-        (cursor-type . box)
-        (foreground-color . "black")
-        ;;                  (background-color . "black")
-        ))
+	;;(top . 100) (left . 100)
+	(width . 140) (height . 60)
+	(cursor-color . "black")
+	(cursor-type . box)
+	(foreground-color . "black")
+	;;                  (background-color . "black")
+	))
 
 ;;
 ;; Add MELPA repository
@@ -66,23 +66,23 @@
 ;
 (setq auto-mode-alist
       (append '(("\\.txt$" . text-mode)
-                ("\\.cc$\\|\\.C$" . c++-mode)
-                ("\\.c$\\|\\.h$" . c-mode)
-                ("\\.js$" . c-mode)
-                ("\\.htm$" . html-helper-mode)
-                ("\\.html$" . html-helper-mode)
-                ("\\.css$" . css-mode)
-                ("^[Mm]akefile" . makefile-mode)
-                ("\\.ahk$" . xahk-mode)
-                ("\\.ad$" . adoc-mode)
-                ("\\.groovy$" . groovy-mode)
-                ) auto-mode-alist ))
+		("\\.cc$\\|\\.C$" . c++-mode)
+		("\\.c$\\|\\.h$" . c-mode)
+		("\\.js$" . c-mode)
+		("\\.htm$" . html-mode)
+		("\\.html$" . html-mode)
+		("\\.css$" . css-mode)
+		("^[Mm]akefile" . makefile-mode)
+		("\\.ahk$" . xahk-mode)
+		("\\.ad$" . adoc-mode)
+		("\\.groovy$" . groovy-mode)
+		) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
 (add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
 ;;
-;; HTML mode
-(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
+;; HTML mode - this is not a great html mode
+;(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 
 ;;
 ;; Add auto fill on text mode
@@ -124,7 +124,7 @@
       ;; appear in the output of java applications.
       ;;
       (add-hook 'comint-output-filter-functions
-                'comint-strip-ctrl-m)
+		'comint-strip-ctrl-m)
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
@@ -136,7 +136,7 @@
       ;;
       ;;   Set up printers to point to the correct printer
       (if (string= (upcase system-name) "BUSTER")
-          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
+	  (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
       )
   ;; Could put else in here
 )
@@ -151,13 +151,13 @@
       ;; appear in the output of java applications.
       ;;
       (add-hook 'comint-output-filter-functions
-                'comint-strip-ctrl-m)
+		'comint-strip-ctrl-m)
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
 
       (if (string= (upcase system-name) "BUSTER")
-          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
+	  (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
       )
   ;; Could put else in here
 )
@@ -196,7 +196,7 @@
   (when (not buffer-backed-up)
     ;; Override the default parameters for per-session backups.
     (let ((backup-directory-alist '(("" . "~/restricted/.emacs/backup/per-session")))
-          (kept-new-versions 3))
+	  (kept-new-versions 3))
       (backup-buffer)))
   ;; Make a "per save" backup on each save.  The first save results in
   ;; both a per-session and a per-save backup, to keep the numbering
@@ -338,6 +338,12 @@
 
 
 ;; .---------------------------------------------------------------------------
+;; |   deft
+;; `---------------------------------------------------------------------------
+(require 'deft)
+
+
+;; .---------------------------------------------------------------------------
 ;; |   doxymacs
 ;; `---------------------------------------------------------------------------
 (require 'doxymacs)
@@ -361,7 +367,7 @@
 (add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'adoc-mode-hook (lambda () (flyspell-mode 1)))
 (require 'flyspell-correct-helm)
-(define-key flyspell-mode-map (kbd "M-'") 'flyspell-correct-previous-word-generic)
+(define-key flyspell-mode-map (kbd "M-'") 'flyspell-auto-correct-previous-word)
 
 ;; .---------------------------------------------------------------------------
 ;; |   function args
@@ -507,6 +513,8 @@
 ;;$ git clone https://github.com/ispras/magit-gerrit.git
 
 (require 'magit-gerrit)
+(setq-default magit-gerrit-push-to 'for)
+(setq-default magit-gerrit-push-format "refs/%s%s%%topic=%s")
 
 ;; if remote url is not using the default gerrit port and
 ;; ssh scheme, need to manually set this variable
@@ -530,15 +538,15 @@
 
 (defadvice show-paren-function
     (after show-matching-paren-offscreen activate)
-        "If the matching paren is offscreen, show the matching line in the
-        echo area. Has no effect if the character before point is not of
-        the syntax class ')'."
-        (interactive)
-        (let* ((cb (char-before (point)))
-               (matching-text (and cb
-                                   (char-equal (char-syntax cb) ?\) )
-                                   (blink-matching-open))))
-                  (when matching-text (message matching-text))))
+	"If the matching paren is offscreen, show the matching line in the
+	echo area. Has no effect if the character before point is not of
+	the syntax class ')'."
+	(interactive)
+	(let* ((cb (char-before (point)))
+	       (matching-text (and cb
+				   (char-equal (char-syntax cb) ?\) )
+				   (blink-matching-open))))
+		  (when matching-text (message matching-text))))
 ;; .---------------------------------------------------------------------------
 ;; |   packages
 ;; `---------------------------------------------------------------------------
@@ -587,11 +595,11 @@
 ;;
 ;; Note: this function is bound to F2 (see below)
 (setq display-time-world-list '(
-                                ("America/Los_Angeles" "Irvine/SD")
-                                ("US/Eastern" "Andover")
-                                ("Europe/London" "London")
-                                ("Asia/Jerusalem" "Israel")
-                                )
+				("America/Los_Angeles" "Irvine/SD")
+				("US/Eastern" "Andover")
+				("Europe/London" "London")
+				("Asia/Jerusalem" "Israel")
+				)
 )
 
 (setq-default inhibit-startup-message t)
@@ -609,6 +617,10 @@
 ;;
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    ;; Use spaces, not tabs.
+	    (setq indent-tabs-mode t)))
 
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
@@ -702,22 +714,23 @@
 
 (defun key-f10 ()
   (interactive)
-  (delete-frame))
+  (deft))
 
 (defun key-f11 ()
   (interactive)
-  (whitespace-mode))
+  (whitespace-mode 'toggle))
 
 (defun key-f12 ()
   (interactive)
   (delete-frame))
 
 ;; And set the colours....
-;(load-theme 'wombat t)
+(load-theme 'wombat t)
 
 (define-key global-map [f1] 'key-f1)
 (define-key global-map [f2] 'key-f2)
 (define-key global-map [f3] 'key-f3)
+
 (define-key global-map [f4] 'key-f4)
 (define-key global-map [f5] 'helm-resume)
 (define-key global-map [f6] 'magit-status)
