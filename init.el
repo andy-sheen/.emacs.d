@@ -16,13 +16,13 @@
 ;; Size of the initial frame
 (setq default-frame-alist
       '(
-	;;(top . 100) (left . 100)
-	(width . 140) (height . 60)
-	(cursor-color . "black")
-	(cursor-type . box)
-	(foreground-color . "black")
-	;;                  (background-color . "black")
-	))
+        ;;(top . 100) (left . 100)
+        (width . 140) (height . 60)
+        (cursor-color . "black")
+        (cursor-type . box)
+        (foreground-color . "black")
+        ;;                  (background-color . "black")
+        ))
 
 ;;
 ;; Setup packages
@@ -67,17 +67,17 @@
 ;
 (setq auto-mode-alist
       (append '(("\\.txt$" . text-mode)
-		("\\.cc$\\|\\.C$" . c++-mode)
-		("\\.c$\\|\\.h$" . c-mode)
-		("\\.js$" . c-mode)
-		("\\.htm$" . html-mode)
-		("\\.html$" . html-mode)
-		("\\.css$" . css-mode)
-		("^[Mm]akefile" . makefile-mode)
-		("\\.ahk$" . xahk-mode)
-		("\\.ad$" . adoc-mode)
-		("\\.groovy$" . groovy-mode)
-		) auto-mode-alist ))
+                ("\\.cc$\\|\\.C$" . c++-mode)
+                ("\\.c$\\|\\.h$" . c-mode)
+                ("\\.js$" . c-mode)
+                ("\\.htm$" . html-mode)
+                ("\\.html$" . html-mode)
+                ("\\.css$" . css-mode)
+                ("^[Mm]akefile" . makefile-mode)
+                ("\\.ahk$" . xahk-mode)
+                ("\\.ad$" . adoc-mode)
+                ("\\.groovy$" . groovy-mode)
+                ) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
 (add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
@@ -125,7 +125,7 @@
       ;; appear in the output of java applications.
       ;;
       (add-hook 'comint-output-filter-functions
-		'comint-strip-ctrl-m)
+                'comint-strip-ctrl-m)
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
@@ -137,7 +137,7 @@
       ;;
       ;;   Set up printers to point to the correct printer
       (if (string= (upcase system-name) "BUSTER")
-	  (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
+          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
       )
   ;; Could put else in here
 )
@@ -152,14 +152,14 @@
       ;; appear in the output of java applications.
       ;;
       (add-hook 'comint-output-filter-functions
-		'comint-strip-ctrl-m)
+                'comint-strip-ctrl-m)
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
       (setq magit-git-executable "/cygdrive/c/cygwin64/bin/git.exe")
 
       (if (string= (upcase system-name) "BUSTER")
-	  (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
+          (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
       )
   ;; Could put else in here
 )
@@ -198,7 +198,7 @@
   (when (not buffer-backed-up)
     ;; Override the default parameters for per-session backups.
     (let ((backup-directory-alist '(("" . "~/restricted/.emacs/backup/per-session")))
-	  (kept-new-versions 3))
+          (kept-new-versions 3))
       (backup-buffer)))
   ;; Make a "per save" backup on each save.  The first save results in
   ;; both a per-session and a per-save backup, to keep the numbering
@@ -540,15 +540,15 @@
 
 (defadvice show-paren-function
     (after show-matching-paren-offscreen activate)
-	"If the matching paren is offscreen, show the matching line in the
-	echo area. Has no effect if the character before point is not of
-	the syntax class ')'."
-	(interactive)
-	(let* ((cb (char-before (point)))
-	       (matching-text (and cb
-				   (char-equal (char-syntax cb) ?\) )
-				   (blink-matching-open))))
-		  (when matching-text (message matching-text))))
+        "If the matching paren is offscreen, show the matching line in the
+        echo area. Has no effect if the character before point is not of
+        the syntax class ')'."
+        (interactive)
+        (let* ((cb (char-before (point)))
+               (matching-text (and cb
+                                   (char-equal (char-syntax cb) ?\) )
+                                   (blink-matching-open))))
+                  (when matching-text (message matching-text))))
 ;; .---------------------------------------------------------------------------
 ;; |   packages
 ;; `---------------------------------------------------------------------------
@@ -557,9 +557,9 @@
 ;;(add-to-list 'package-archives
 ;;             '("melpa" . "http://melpa.org/packages/") t)
 
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+;; (when (< emacs-major-version 24)
+;;   ;; For important compatibility libraries like cl-lib
+;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -597,11 +597,11 @@
 ;;
 ;; Note: this function is bound to F2 (see below)
 (setq display-time-world-list '(
-				("America/Los_Angeles" "Irvine/SD")
-				("US/Eastern" "Andover")
-				("Europe/London" "London")
-				("Asia/Jerusalem" "Israel")
-				)
+                                ("America/Los_Angeles" "Irvine/SD")
+                                ("US/Eastern" "Andover")
+                                ("Europe/London" "London")
+                                ("Asia/Jerusalem" "Israel")
+                                )
 )
 
 (setq-default inhibit-startup-message t)
@@ -678,9 +678,9 @@
   (interactive)
   (info))
 
-(defun key-f2 ()
-  (interactive)
-  (display-time-world))
+;; (defun key-f2 ()
+;;   (interactive)
+;;   (display-time-world))
 
 (defun key-f3 ()
   (interactive)
