@@ -25,9 +25,10 @@
 	))
 
 ;;
-;; Add MELPA repository
+;; Setup packages
 (when (>= emacs-major-version 24)
    (require 'package)
+;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
    (package-initialize)
    )
@@ -155,6 +156,7 @@
       ;;
       ;; Set an appropriate temporary file
       (setq temporary-file-directory "/cygdrive/c/Temp/")
+      (setq magit-git-executable "/cygdrive/c/cygwin64/bin/git.exe")
 
       (if (string= (upcase system-name) "BUSTER")
 	  (setq printer-name "//buster/m476dw (HP Color LaserJet MFP M476dw)"))
@@ -617,10 +619,10 @@
 ;;
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
-(add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    ;; Use spaces, not tabs.
-	    (setq indent-tabs-mode t)))
+;; (add-hook 'emacs-lisp-mode-hook
+;;	  (lambda ()
+;;	    ;; Use spaces, not tabs.
+;;	    (setq indent-tabs-mode t)))
 
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
