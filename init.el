@@ -60,7 +60,6 @@
 ;; Turn on column numbering
 (setq column-number-mode t)
 
-
 ;; .---------------------------------------------------------------------------
 ;; |   auto mode loading
 ;; `---------------------------------------------------------------------------
@@ -81,9 +80,6 @@
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
 (add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
-;;
-;; HTML mode - this is not a great html mode
-;(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 
 ;;
 ;; Add auto fill on text mode
@@ -225,8 +221,6 @@
 (add-hook 'c-mode-hook (lambda () (c-set-offset 'inextern-lang 0)))
 
 (require 'cc-mode)
-;; (autoload 'c++-mode "cc-mode" "C++ Editing Mode" t)
-;; (autoload 'c-mode   "cc-mode" "C Editing Mode" t)
 
 ;; .---------------------------------------------------------------------------
 ;; | compilation
@@ -355,14 +349,6 @@
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
 
-
-;; .---------------------------------------------------------------------------
-;; |   electric pair mode
-;; `---------------------------------------------------------------------------
-;; turn on automatic bracket insertion by pairs. New in emacs 24
-;(setq electric-pair-open-newline-between-pairs t)
-;(electric-pair-mode 1)
-
 ;; .---------------------------------------------------------------------------
 ;; |   flyspell
 ;; `---------------------------------------------------------------------------
@@ -370,16 +356,6 @@
 (add-hook 'adoc-mode-hook (lambda () (flyspell-mode 1)))
 (require 'flyspell-correct-helm)
 (define-key flyspell-mode-map (kbd "M-'") 'flyspell-auto-correct-previous-word)
-
-;; .---------------------------------------------------------------------------
-;; |   function args
-;; `---------------------------------------------------------------------------
-;(require 'function-args)
-;(setq moo-select-method 'helm)
-;(fa-config-default)
-;;
-;; Put back M-i for helm-swoop
-;(define-key function-args-mode-map (kbd "M-i") 'helm-swoop)
 
 ;; .---------------------------------------------------------------------------
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
@@ -460,15 +436,6 @@
 ;; disable pre-input
 (setq helm-swoop-pre-input-function
       (lambda () ""))
-;;
-;; swiper-helm
-;;(require 'swiper-helm)
-;;(define-key global-map (kbd "C-f") 'swiper-helm)
-;;(define-key swiper-helm-keymap (kbd "C-f") 'helm-next-line)
-;;
-;; AC plus helm
-;;(global-set-key (kbd "M-2") 'ac-complete-with-helm)
-;;(define-key ac-complete-mode-map (kbd "M-2") 'ac-complete-with-helm)
 
 ;;
 ;; helm-gtags
@@ -498,21 +465,14 @@
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
 ;; .---------------------------------------------------------------------------
-;; |   help+
-;; `---------------------------------------------------------------------------
-;(require 'help+)
-;(require 'help-fns+)
-;(require 'help-macro+)
-;(require 'help-mode+)
-
-;; .---------------------------------------------------------------------------
 ;; |   magit mode
 ;; `---------------------------------------------------------------------------
 ;;
-;; Note I am using https://github.com/ispras/magit-gerrit in site-lisp/magit-gerrit
+;; Note I am using my version git@github.com:andy-sheen/magit-gerrit.git
 ;; ced to site lisp and:
 ;;$ cd site-lisp/
-;;$ git clone https://github.com/ispras/magit-gerrit.git
+;;$ git clone git@github.com:andy-sheen/magit-gerrit.git
+;; until this is rolled back into a melpa release
 
 (require 'magit-gerrit)
 (setq-default magit-gerrit-push-to 'for)
@@ -525,12 +485,12 @@
 (setq-default git-commit-summary-max-length 70)
 
 ;; .---------------------------------------------------------------------------
-;; |   org mode
+;; |   org mode. Now using
 ;; `---------------------------------------------------------------------------
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-switchb)
+;(global-set-key "\C-cl" 'org-store-link)
+;(global-set-key "\C-ca" 'org-agenda)
+;(global-set-key "\C-cc" 'org-capture)
+;(global-set-key "\C-cb" 'org-switchb)
 
 ;; .---------------------------------------------------------------------------
 ;; |   paren mode
@@ -577,14 +537,6 @@
 ;;     '(lambda () (define-abbrev php-mode-abbrev-table "ex" "extends")))
 
 ;; .---------------------------------------------------------------------------
-;; |   projectile
-;; `---------------------------------------------------------------------------
-;; (projectile-global-mode)
-;; (setq projectile-completion-system 'helm)
-;; (setq projectile-switch-project-action 'helm-projectile-find-file-dwim)
-;; (helm-projectile-on)
-
-;; .---------------------------------------------------------------------------
 ;; |   sr-speedbar
 ;; `---------------------------------------------------------------------------
 (setq sr-speedbar-skip-other-window-p t)
@@ -595,7 +547,7 @@
 (display-time)
 (setq-default display-time-day-and-date t)
 ;;
-;; Note: this function is bound to F2 (see below)
+;; Note: this function used to be bound to F2 (see below)
 (setq display-time-world-list '(
                                 ("America/Los_Angeles" "Irvine/SD")
                                 ("US/Eastern" "Andover")
@@ -619,10 +571,6 @@
 ;;
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
-;; (add-hook 'emacs-lisp-mode-hook
-;;	  (lambda ()
-;;	    ;; Use spaces, not tabs.
-;;	    (setq indent-tabs-mode t)))
 
 ;; .---------------------------------------------------------------------------
 ;; |   Funky keyboard stuff
