@@ -7,7 +7,7 @@
 ; emacs specific display tweaks
 ;
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/magit-gerrit")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-gerrit")
 
 ;(require 'custom)
 ;;;;
@@ -68,9 +68,9 @@
       (append '(("\\.txt$" . text-mode)
                 ("\\.cc$\\|\\.C$" . c++-mode)
                 ("\\.c$\\|\\.h$" . c-mode)
-                ("\\.js$" . c-mode)
-                ("\\.htm$" . html-mode)
-                ("\\.html$" . html-mode)
+                ("\\.js$" . web-mode)
+                ("\\.htm$" . web-mode)    ; Used to be html-mode
+                ("\\.html$" . web-mode)   ; Used to be html-mode
                 ("\\.css$" . css-mode)
                 ("^[Mm]akefile" . makefile-mode)
                 ("\\.ahk$" . xahk-mode)
@@ -565,6 +565,18 @@
 ;;
 (setq tramp-default-method "ssh")
 
+;; .---------------------------------------------------------------------------
+;; |   web-mode
+;; `---------------------------------------------------------------------------
+;;
+(setq web-mode-enable-engine-detection t)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-engines-alist
+      '(("django" . "\\.html\\'")
+        ("blade"  . "\\.blade\\."))
+      )
 ;; .---------------------------------------------------------------------------
 ;; |   whitespace
 ;; `---------------------------------------------------------------------------
