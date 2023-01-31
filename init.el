@@ -26,12 +26,11 @@
 
 ;;
 ;; Setup packages
-(when (>= emacs-major-version 24)
-   (require 'package)
+(require 'package)
 ;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-   (package-initialize)
-   )
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
 (setq custom-safe-themes t)
 
 ;;
@@ -515,15 +514,6 @@
 ;; |   packages
 ;; `---------------------------------------------------------------------------
 (require 'package)
-
-;;(add-to-list 'package-archives
-;;             '("melpa" . "http://melpa.org/packages/") t)
-
-;; (when (< emacs-major-version 24)
-;;   ;; For important compatibility libraries like cl-lib
-;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-
-(package-initialize)
 
 ;; .---------------------------------------------------------------------------
 ;; |   php mode
