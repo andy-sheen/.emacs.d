@@ -7,7 +7,6 @@
 ; emacs specific display tweaks
 ;
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-gerrit")
 
 ;(require 'custom)
 ;;;;
@@ -28,7 +27,7 @@
 ;; Setup packages
 (require 'package)
 ;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (setq custom-safe-themes t)
@@ -78,7 +77,6 @@
                 ) auto-mode-alist ))
 
 (add-to-list 'magic-mode-alist '( "\[[A-Za-z0-9]\+\]" . conf-unix-mode))
-(add-to-list 'magic-mode-alist '( "#![ /A-Za-z]+/php" . php-mode))
 
 ;;
 ;; Add auto fill on text mode
@@ -363,7 +361,7 @@
 ;; `---------------------------------------------------------------------------
 (require 'helm)
 ;(require 'helm-config)
-(require 'helm-swoop)
+;(require 'helm-swoop)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -393,106 +391,6 @@
 
 (helm-mode 1)
 
-;; helm-swoop config: https://github.com/ShingoFukuyama/helm-swoop
-;; Change the keybinds to whatever you like :)
-;;(global-set-key (kbd "M-i") 'helm-swoop)
-(global-set-key (kbd "C-f") 'helm-swoop)
-(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
-(global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-(global-set-key (kbd "M-i") 'helm-multi-swoop-all)
-
-;; When doing isearch, hand the word over to helm-swoop
-(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-;; From helm-swoop to helm-multi-swoop-all
-(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-;; When doing evil-search, hand the word over to helm-swoop
-;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
-
-;; Move up and down like isearch
-(define-key helm-swoop-map (kbd "C-p") 'helm-previous-line)
-(define-key helm-swoop-map (kbd "C-n") 'helm-next-line)
-(define-key helm-swoop-map (kbd "C-f") 'helm-next-line)
-(define-key helm-multi-swoop-map (kbd "C-p") 'helm-previous-line)
-(define-key helm-multi-swoop-map (kbd "C-n") 'helm-next-line)
-(define-key helm-multi-swoop-map (kbd "C-f") 'helm-next-line)
-
-;; Save buffer when helm-multi-swoop-edit complete
-(setq helm-multi-swoop-edit-save t)
-
-;; If this value is t, split window inside the current window
-(setq helm-swoop-split-with-multiple-windows nil)
-
-;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-(setq helm-swoop-split-direction 'split-window-vertically)
-
-;; If nil, you can slightly boost invoke speed in exchange for text color
-(setq helm-swoop-speed-or-color nil)
-
-;; ;; Go to the opposite side of line from the end or beginning of line
-(setq helm-swoop-move-to-line-cycle t)
-
-;; Optional face for line numbers
-;; Face name is `helm-swoop-line-number-face`
-(setq helm-swoop-use-line-number-face t)
-;; disable pre-input
-(setq helm-swoop-pre-input-function
-      (lambda () ""))
-
-;;
-;; helm-gtags
-(setq
- helm-gtags-path-style 'relative
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
- helm-gtags-suggested-key-mapping t
- )
-
-(require 'helm-gtags)
-;; Enable helm-gtags-mode
-(add-hook 'dired-mode-hook 'helm-gtags-mode)
-(add-hook 'eshell-mode-hook 'helm-gtags-mode)
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-
-;; .---------------------------------------------------------------------------
-;; |   magit mode
-;; `---------------------------------------------------------------------------
-;;
-;; Note I am using my version git@github.com:andy-sheen/magit-gerrit.git
-;; ced to site lisp and:
-;;$ cd site-lisp/
-;;$ git clone git@github.com:andy-sheen/magit-gerrit.git
-;; until this is rolled back into a melpa release
-
-(require 'magit-gerrit)
-(setq-default magit-gerrit-push-to 'for)
-(setq-default magit-gerrit-push-format "refs/%s%s%%topic=%s")
-
-;; if remote url is not using the default gerrit port and
-;; ssh scheme, need to manually set this variable
-;(setq-default magit-gerrit-ssh-creds "myid@gerrithost.org")
-;(setq-default magit-gerrit-remote "review")
-(setq-default git-commit-summary-max-length 70)
-
-;; .---------------------------------------------------------------------------
-;; |   org mode. Now using
-;; `---------------------------------------------------------------------------
-;(global-set-key "\C-cl" 'org-store-link)
-;(global-set-key "\C-ca" 'org-agenda)
-;(global-set-key "\C-cc" 'org-capture)
-;(global-set-key "\C-cb" 'org-switchb)
-
 ;; .---------------------------------------------------------------------------
 ;; |   paren mode
 ;; `---------------------------------------------------------------------------
@@ -514,19 +412,6 @@
 ;; |   packages
 ;; `---------------------------------------------------------------------------
 (require 'package)
-
-;; .---------------------------------------------------------------------------
-;; |   php mode
-;; `---------------------------------------------------------------------------
-(require 'php-mode)
-
-;; If you want colorization, turn on global-font-lock or
-;; add this to your .emacs:
-(add-hook 'php-mode-user-hook 'turn-on-font-lock)
-
-;; To use abbrev-mode, add lines like this:
-;;   (add-hook 'php-mode-user-hook
-;;     '(lambda () (define-abbrev php-mode-abbrev-table "ex" "extends")))
 
 ;; .---------------------------------------------------------------------------
 ;; |   sr-speedbar
@@ -681,7 +566,7 @@
   (delete-frame))
 
 ;; And set the colours....
-(load-theme 'wombat t)
+;(load-theme 'wombat t)
 
 (define-key global-map [f1] 'key-f1)
 (define-key global-map [f2] 'key-f2)
@@ -716,6 +601,13 @@
 (define-key global-map "\e[1;5q" 'key-f2)
 (define-key global-map "\e[1;5r" 'key-c-f3) ; Recompile
 (define-key global-map "\e[1;5s" 'key-f4)
+
+;; Terminal Emacs resets faces during startup.
+;; After 10+ years of pressing F7, just load Wombat after it settles.
+(run-with-idle-timer
+ 1 nil
+ (lambda ()
+   (load-theme 'wombat t)))
 
 ;; .---------------------------------------------------------------------------
 ;; |   Emacs server
@@ -752,7 +644,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(deft php-mode magit-gerrit helm-swoop helm-gtags flyspell-correct-helm)))
+   '(deft php-mode magit-gerrit flyspell-correct-helm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
