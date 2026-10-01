@@ -362,7 +362,7 @@
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
 ;; `---------------------------------------------------------------------------
 (require 'helm)
-(require 'helm-config)
+;(require 'helm-config)
 (require 'helm-swoop)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
@@ -746,3 +746,16 @@
 (put 'downcase-region 'disabled nil)
 
 (put 'upcase-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(deft php-mode magit-gerrit helm-swoop helm-gtags flyspell-correct-helm)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
