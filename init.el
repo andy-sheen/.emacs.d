@@ -340,7 +340,6 @@
 ;; |   deft
 ;; `---------------------------------------------------------------------------
 (use-package deft
-  :ensure t
   :config (setq deft-auto-save-interval 300.0))
 
 
@@ -366,10 +365,41 @@
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
 ;; `---------------------------------------------------------------------------
 (use-package helm
-  :ensure t)
+  :bind
+  (("C-c h"     . helm-command-prefix)
+   ("M-x"       . helm-M-x)
+   ("C-x b"     . helm-mini)
+   ("C-x C-b"   . helm-buffers-list)
+   ("C-x C-f"   . helm-find-files)
+   ("C-c <SPC>" . helm-all-mark-rings))
+  :config
+  ;; C-x c is dangerously close to C-x C-c.
+  (global-unset-key (kbd "C-x c"))
+
+  ;; Helm navigation/actions.
+  (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+  ;; C-i is TAB in a terminal.
+  (define-key helm-map (kbd "C-i") #'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z") #'helm-select-action)
+
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+
+  (setq helm-split-window-in-side-p t
+        helm-move-to-line-cycle-in-source t
+        helm-ff-search-library-in-sexp t
+        helm-scroll-amount 8
+        helm-ff-file-name-history-use-recentf t)
+
+  (helm-mode 1))
+
+;; helm-swoop is no longer in MELPA, so bootstrap it from Emacs Attic.
+(unless (package-installed-p 'helm-swoop)
+  (package-vc-install
+   "https://github.com/emacsattic/helm-swoop.git"))
+
 (use-package helm-swoop
-  :vc (:url "https://github.com/emacsattic/helm-swoop.git"
-       :rev :newest)
+  :ensure nil
 
   :bind
   (("C-f"     . helm-swoop)
@@ -402,33 +432,10 @@
   (helm-swoop-use-line-number-face t)
   (helm-swoop-pre-input-function (lambda () "")))
 
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c <SPC>") 'helm-all-mark-rings)
-;;(global-set-key (kbd "M-r") 'helm-do-grep)
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t)
-
-(helm-mode 1)
+;; .---------------------------------------------------------------------------
+;; |   magit mode
+;; `---------------------------------------------------------------------------
+(use-package magit)
 
 ;; .---------------------------------------------------------------------------
 ;; |   paren mode
@@ -668,7 +675,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(deft flyspell-correct-helm helm-swoop magit-gerrit php-mode))
+   '(deft flyspell-correct-helm helm-swoop magit magit-gerrit php-mode))
  '(package-vc-selected-packages
    '((helm-swoop :vc-backend Git :url
                  "https://github.com/emacsattic/helm-swoop.git"))))
