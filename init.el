@@ -26,9 +26,15 @@
 ;;
 ;; Setup packages
 (require 'package)
-;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+(setq package-archives
+      '(("gnu"   . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")))
+
 (package-initialize)
+
+(setq use-package-always-ensure t)
 
 (setq custom-safe-themes t)
 
@@ -333,35 +339,68 @@
 ;; .---------------------------------------------------------------------------
 ;; |   deft
 ;; `---------------------------------------------------------------------------
-;; (require 'deft)
 (use-package deft
-             :config (setq deft-auto-save-interval 300.0))
+  :ensure t
+  :config (setq deft-auto-save-interval 300.0))
 
 
 ;; .---------------------------------------------------------------------------
 ;; |   doxymacs
 ;; `---------------------------------------------------------------------------
-(require 'doxymacs)
-(defun my-doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
-(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;; (require 'doxymacs)
+;; (defun my-doxymacs-font-lock-hook ()
+;;   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;       (doxymacs-font-lock)))
+;; (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+;; (add-hook 'c-mode-common-hook 'doxymacs-mode)
 
 ;; .---------------------------------------------------------------------------
 ;; |   flyspell
 ;; `---------------------------------------------------------------------------
 (add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'adoc-mode-hook (lambda () (flyspell-mode 1)))
-(require 'flyspell-correct-helm)
+(use-package flyspell-correct-helm)
 (define-key flyspell-mode-map (kbd "M-'") 'flyspell-auto-correct-previous-word)
 
 ;; .---------------------------------------------------------------------------
 ;; |   helm see: http://tuhdo.github.io/helm-intro.html
 ;; `---------------------------------------------------------------------------
-(require 'helm)
-;(require 'helm-config)
-;(require 'helm-swoop)
+(use-package helm
+  :ensure t)
+(use-package helm-swoop
+  :vc (:url "https://github.com/emacsattic/helm-swoop.git"
+       :rev :newest)
+
+  :bind
+  (("C-f"     . helm-swoop)
+   ("M-I"     . helm-swoop-back-to-last-point)
+   ("C-c M-i" . helm-multi-swoop)
+   ("M-i"     . helm-multi-swoop-all))
+
+  :config
+  ;; Search integration
+  (define-key isearch-mode-map (kbd "M-i")
+              #'helm-swoop-from-isearch)
+  (define-key helm-swoop-map (kbd "M-i")
+              #'helm-multi-swoop-all-from-helm-swoop)
+
+  ;; Navigate results like isearch
+  (define-key helm-swoop-map (kbd "C-p") #'helm-previous-line)
+  (define-key helm-swoop-map (kbd "C-n") #'helm-next-line)
+  (define-key helm-swoop-map (kbd "C-f") #'helm-next-line)
+
+  (define-key helm-multi-swoop-map (kbd "C-p") #'helm-previous-line)
+  (define-key helm-multi-swoop-map (kbd "C-n") #'helm-next-line)
+  (define-key helm-multi-swoop-map (kbd "C-f") #'helm-next-line)
+
+  :custom
+  (helm-multi-swoop-edit-save t)
+  (helm-swoop-split-with-multiple-windows nil)
+  (helm-swoop-split-direction 'split-window-vertically)
+  (helm-swoop-speed-or-color nil)
+  (helm-swoop-move-to-line-cycle t)
+  (helm-swoop-use-line-number-face t)
+  (helm-swoop-pre-input-function (lambda () "")))
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -396,22 +435,7 @@
 ;; `---------------------------------------------------------------------------
 (show-paren-mode 1)
 (setq show-paren-delay 0.5)
-
-(defadvice show-paren-function
-    (after show-matching-paren-offscreen activate)
-        "If the matching paren is offscreen, show the matching line in the
-        echo area. Has no effect if the character before point is not of
-        the syntax class ')'."
-        (interactive)
-        (let* ((cb (char-before (point)))
-               (matching-text (and cb
-                                   (char-equal (char-syntax cb) ?\) )
-                                   (blink-matching-open))))
-                  (when matching-text (message matching-text))))
-;; .---------------------------------------------------------------------------
-;; |   packages
-;; `---------------------------------------------------------------------------
-(require 'package)
+(setq show-paren-context-when-offscreen 'echo-area)
 
 ;; .---------------------------------------------------------------------------
 ;; |   sr-speedbar
@@ -644,7 +668,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(deft php-mode magit-gerrit flyspell-correct-helm)))
+   '(deft flyspell-correct-helm helm-swoop magit-gerrit php-mode))
+ '(package-vc-selected-packages
+   '((helm-swoop :vc-backend Git :url
+                 "https://github.com/emacsattic/helm-swoop.git"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

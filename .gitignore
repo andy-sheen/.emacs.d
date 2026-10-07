@@ -1,10 +1,6 @@
-auto-save-list
-ac-comphist.dat
-elpa
-eshell
-projectile-bookmarks.eld
-recentf
-semanticdb
+/auto-save-list/
+/elpa
+/recentf
 tramp
 custom.el
 bookmarks
@@ -13,4 +9,5 @@ notes.org
 site-lisp-old
 transient
 magit-gerrit
-eln-cache/
+/eln-cache/
+/projects
